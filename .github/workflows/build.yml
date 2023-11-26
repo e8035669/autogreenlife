@@ -15,9 +15,11 @@ jobs:
           - target: x86_64-pc-windows-gnu
             archive: zip
             os_name: windows
+            static_linking: true
           - target: x86_64-unknown-linux-musl
             archive: tar.gz tar.xz tar.zst
             os_name: linux
+            static_linking: false
     steps:
       - uses: actions/checkout@master
       - name: Compile
@@ -27,6 +29,7 @@ jobs:
           RUSTTARGET: ${{ matrix.target }}
           ARCHIVE_TYPES: ${{ matrix.archive }}
           UPLOAD_MODE: none
+          STATIC_LINKING: ${{ matrix.static_linking }}
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
